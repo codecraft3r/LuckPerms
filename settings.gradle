@@ -6,8 +6,8 @@ pluginManagement {
             url = 'https://maven.fabricmc.net/'
         }
         maven {
-            name = 'Forge'
-            url = 'https://maven.minecraftforge.net/'
+            name = 'NeoForge'
+            url = 'https://maven.neoforged.net/releases'
         }
     }
 }
@@ -21,26 +21,6 @@ include (
         'api',
         'common',
         'common:loader-utils',
-        'bukkit',
-        'bukkit:loader',
-        'bukkit-legacy',
-        'bukkit-legacy:loader',
-        'bungee',
-        'bungee:loader',
-        'fabric',
         'neoforge',
-        'neoforge:loader',
-        'forge',
-        'forge:loader',
-        'forge:forge-api',
-        'nukkit',
-        'nukkit:loader',
-        'sponge',
-        'sponge:loader',
-        'sponge:sponge-service',
-        'sponge:sponge-service-api8',
-        'velocity',
-        'standalone',
-        'standalone:loader',
-        'standalone:app'
+        'neoforge:loader'
 )
