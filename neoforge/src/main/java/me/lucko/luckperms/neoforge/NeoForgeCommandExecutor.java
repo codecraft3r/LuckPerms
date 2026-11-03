@@ -51,6 +51,33 @@ public class NeoForgeCommandExecutor extends BrigadierCommandExecutor<CommandSou
         this.plugin = plugin;
     }
 
+    @Override
+    public int run(com.mojang.brigadier.context.CommandContext<CommandSourceStack> context) throws com.mojang.brigadier.exceptions.CommandSyntaxException {
+        CommandSourceStack source = context.getSource();
+        Sender sender = getSender(source);
+
+        int start = context.getRange().getStart();
+        String buffer = context.getInput().substring(start);
+
+        java.util.List<String> arguments;
+        if (this.plugin.getConfiguration().get(me.lucko.luckperms.common.config.ConfigKeys.RESOLVE_COMMAND_SELECTORS)) {
+            arguments = resolveSelectors(source, me.lucko.luckperms.common.command.utils.ArgumentTokenizer.EXECUTE.tokenizeInput(buffer));
+        } else {
+            arguments = me.lucko.luckperms.common.command.utils.ArgumentTokenizer.EXECUTE.tokenizeInput(buffer);
+        }
+
+        String label = arguments.remove(0);
+        if (label.startsWith("/")) {
+            label = label.substring(1);
+        }
+
+        java.util.concurrent.CompletableFuture<Void> future = executeCommand(sender, label, arguments);
+        if (sender.isConsole()) {
+            future.join();
+        }
+        return com.mojang.brigadier.Command.SINGLE_SUCCESS;
+    }
+
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {
         for (String alias : COMMAND_ALIASES) {

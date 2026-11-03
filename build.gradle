@@ -40,10 +40,10 @@ subprojects {
         // get the name of the last tag
         def tagInfo = new ByteArrayOutputStream()
         exec {
-            commandLine 'git', 'describe', '--tags'
+            commandLine 'git', 'describe', '--tags', '--match', 'v[0-9].[0-9]'
             standardOutput = tagInfo
         }
-        tagInfo = tagInfo.toString()
+        tagInfo = tagInfo.toString().trim()
 
         if (!tagInfo.contains('-')) {
             return 0

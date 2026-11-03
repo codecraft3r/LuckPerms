@@ -75,7 +75,11 @@ public class NeoForgeSenderFactory extends SenderFactory<LPNeoForgePlugin, Comma
         Locale locale = sender.getEntity() instanceof ServerPlayer player
                 ? TranslationManager.parseLocale(player.getLanguage())
                 : null;
-        sender.sendSuccess(() -> toNativeText(TranslationManager.render(message, locale)), false);
+        net.minecraft.network.chat.Component nativeMsg = toNativeText(TranslationManager.render(message, locale));
+        sender.sendSuccess(() -> nativeMsg, false);
+        if (isConsole(sender) && sender.source.getClass() == RconConsoleSource.class) {
+            sender.getServer().sendSystemMessage(nativeMsg);
+        }
     }
 
     @Override
