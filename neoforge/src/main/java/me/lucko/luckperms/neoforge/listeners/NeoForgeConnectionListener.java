@@ -33,7 +33,6 @@ import me.lucko.luckperms.common.model.User;
 import me.lucko.luckperms.common.plugin.util.AbstractConnectionListener;
 import me.lucko.luckperms.neoforge.NeoForgeSenderFactory;
 import me.lucko.luckperms.neoforge.LPNeoForgePlugin;
-import me.lucko.luckperms.neoforge.capabilities.UserCapabilityImpl;
 import me.lucko.luckperms.neoforge.util.AsyncConfigurationTask;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.Connection;
@@ -147,9 +146,6 @@ public class NeoForgeConnectionListener extends AbstractConnectionListener {
             }
         }
 
-        // initialise capability
-        UserCapabilityImpl userCapability = UserCapabilityImpl.get(player);
-        userCapability.initialise(user, player, this.plugin.getContextManager());
         this.plugin.getContextManager().signalContextUpdate(player);
     }
 
